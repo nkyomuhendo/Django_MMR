@@ -3,8 +3,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
 # Create your views here.
-def home(request):
-    # check to see if logging in
+def login_user(request):
+    
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -24,7 +24,4 @@ def home(request):
 def logout_user(request):
     logout(request)
     messages.success(request, "You Have Been Logged Out ...")
-    return redirect('home')
-
-def register_user(request):
-    return render(request, 'webapp/register.html', {})
+    return redirect('webapp/home.html')
