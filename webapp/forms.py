@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
+from .models import Product, Category, Exercise
 
 class SignUpForm(UserCreationForm):
     email = forms.EmailField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Email Address'}))
@@ -32,3 +33,48 @@ class SignUpForm(UserCreationForm):
         self.fields['password2'].help_text = '<span class="form-text text-muted"><small>Enter the same password as before, for verification.</small></span>'
 
     
+class AddProductForm(forms.ModelForm):
+    
+    def __init__(self, created_by, *args, **kwargs):
+        super(AddProductForm, self).__init__(*args, **kwargs)
+        self.fields['category'] = forms.ModelChoiceField(queryset=Category.objects.all())
+        # self.fields['created_by'] = forms.(request.user())
+ 
+    title = forms.CharField(max_length=255)
+    description = forms.CharField(max_length=255)
+    table = forms.IntegerField()
+    no_of_samples = forms.IntegerField() 
+    low_test_mark = forms.IntegerField()
+    upper_test_mark = forms.IntegerField()
+
+
+    class Meta:
+        model = Product
+        # exclude = ("user", )
+        fields = ['title', 'category', 'table', 'no_of_samples', 'low_test_mark', 'upper_test_mark',]
+
+
+# your_app/forms.py
+
+# from django import forms
+# from .models import Exercise
+
+class ExerciseForm(forms.ModelForm):
+    class Meta:
+        model = Exercise
+        fields = ['product', 'item_No', 'x_val', 'y_val', 'z_val', 'o_val', 'p_val', 'q_val']
+
+# your_app/forms.py
+
+# from django import forms
+# from .models import Category, Product
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ['name', 'slug']
+
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        exclude = ['created_by', 'created', 'updated']

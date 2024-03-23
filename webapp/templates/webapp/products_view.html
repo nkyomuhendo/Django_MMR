@@ -1,0 +1,77 @@
+{% extends 'webapp/base.html' %}
+
+{% block content %}
+
+    <div class="col-md-6 offset-md-3">
+      <h1> Here's our Products list:</h1>
+      <!-- {% for product in products %}
+          
+          <li>
+          {{ product }}
+          </li>
+
+      {% endfor %} -->
+    </div>
+
+    {% if user.is_authenticated %}
+
+
+    <table class="table table-striped table-hover table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">NO:</th>
+          <th scope="col">Name</th>
+          <th scope="col">Created At</th>
+          <th scope="col">Completed</th>
+          <th scope="col">No. Of Samples</th>
+          <th scope="col">Table</th>
+          <th scope="col">Test Range</th>
+          <th scope="col">Category</th>  
+          <th scope="col">ID</th>    
+        </tr>
+      </thead>
+      <tbody>
+        
+        {% if products %}
+
+          {% for product in products %}
+
+            <tr>
+              <td>{{ forloop.counter }}</td>      
+              <td>{{ product.title }}</td>
+              <td>{{ product.created }}</td>
+              <td>{{ product.complete }}</td>
+              <td>{{ product.no_of_samples }}</td>
+              <td>{{ product.table }}</td>
+              <td>{{ product.low_test_mark }} : {{ product.upper_test_mark }}</td>
+              <td>{{ product.category }}</td>
+              <td><a href="{% url 'product-view' product.id %}">{{ product.id }}</a></td>
+            </tr>
+          {% endfor %}
+        {% endif%}
+      </tbody>
+    </table>
+
+
+    {% else %}
+      <div class="col-md-6 offset-md-3">
+
+          <h1>Login!</h1>
+          <br/>
+          <form method="POST" action="{% url 'webapp-home' %}">
+              {% csrf_token %}
+
+                  <div class="mb-3">
+                    <input type="text" class="form-control" name="username" placeholder="Username" required>
+                  </div><br/>
+                  <div class="mb-3">
+                    <input type="password" class="form-control" name="password" placeholder="Password" required>
+                  </div>
+                  <br/>
+                  <button type="submit" class="btn btn-secondary">Login</button>
+              
+          </form>
+      </div>
+    {% endif %}
+
+{% endblock content %}

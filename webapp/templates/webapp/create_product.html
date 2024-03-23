@@ -1,0 +1,26 @@
+<!-- templates/create_product.html -->
+
+{% extends 'webapp/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="col-md-4 offset-md-3">
+    <h2>Create New Product</h2>
+    <form method="post">
+        {% csrf_token %}
+        
+        <!-- You can render the form fields either as paragraphs or using Crispy Forms -->
+        <!-- Render as paragraphs -->
+        <!-- {{ form.as_p }} -->
+        
+        <!-- Or render using Crispy Forms -->
+        {{ form|crispy }}
+        
+        <button type="submit">Submit</button>
+    </form>
+</div>
+{% endblock %}
+
+
+
+

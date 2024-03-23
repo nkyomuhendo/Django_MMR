@@ -1,0 +1,65 @@
+{% extends 'webapp/base.html' %}
+
+{% block content %}
+
+
+{% if user.is_authenticated %}
+
+
+<table class="table table-striped table-hover table-bordered">
+  <thead class="table-dark">
+    <tr>
+      <th scope="col">No:</th> 
+      <th scope="col">x_val</th>
+      <th scope="col">OPn</th>
+      <th scope="col">y_val</th>
+      <th scope="col">Equals</th>
+      <th scope="col">z_val</th>
+      <th scope="col">Blank</th>
+      <th scope="col">Blank</th>
+           
+    </tr>
+  </thead>
+  <tbody>
+    
+    {% if product_records %}
+      {% for product in product_records %}
+        <tr>
+          <td>{{ product.item_No }}</td>      
+          <td>{{ product.x_val }}</td>
+          <td>{{ Opn_Sym }}</td>
+          <td>{{ product.y_val }}</td>
+          <td> = </td>
+          <td>{{ product.z_val }}</td>
+          <td>___</td>
+          <td>___</td>
+          <!-- <td><a href="{% url 'product-view' product.id %}">{{ product.id }}</a></td> -->
+        </tr>
+      {% endfor %}
+    {% endif%}
+  </tbody>
+</table>
+
+
+{% else %}
+<div class="col-md-6 offset-md-3">
+
+    <h1>Login!</h1>
+    <br/>
+    <form method="POST" action="{% url 'webapp-home' %}">
+        {% csrf_token %}
+
+            <div class="mb-3">
+              <input type="text" class="form-control" name="username" placeholder="Username" required>
+            </div><br/>
+            <div class="mb-3">
+              <input type="password" class="form-control" name="password" placeholder="Password" required>
+            </div>
+            <br/>
+            <button type="submit" class="btn btn-secondary">Login</button>
+        
+    </form>
+</div>
+{% endif %}
+
+{% endblock content %}

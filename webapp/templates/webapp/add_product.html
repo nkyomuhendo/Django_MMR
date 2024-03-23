@@ -1,0 +1,20 @@
+{% extends 'webapp/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="col-md-6 offset-md-3">
+    <h1>Add Product</h1>
+<br/>
+
+<form method="POST" action="{% url 'add-product1' %}">
+    {% csrf_token%} 
+
+    <!-- {{ form.as_p }} -->
+    {% crispy form %}
+    
+    <br/>
+    <button type="submit" class="btn btn-secondary">Add Product</button>
+</form>
+</div>
+{% endblock content %}

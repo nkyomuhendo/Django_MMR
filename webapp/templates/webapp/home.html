@@ -12,7 +12,7 @@
        
         <h1>Login!</h1>
         <br/>
-        <form method="POST" action="{% url 'home' %}">
+        <form method="POST" action="{% url 'webapp-home' %}">
             {% csrf_token %}
             <div class="mb-3">
                 <input type="text" class="form-control" name="username", placeholder="Username" required>
